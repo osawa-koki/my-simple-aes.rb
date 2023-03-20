@@ -1,12 +1,28 @@
+require 'optparse'
 require 'openssl'
 require 'base64'
 
-# 固定のIVとKEY
-iv = '0123456789abcdef'
-key = '0123456789abcdef0123456789abcdef'
+# コマンドライン引数を解析
+options = {}
+OptionParser.new do |opts|
+  opts.banner = "Usage: example.rb [options]"
+  opts.on("-i", "--iv IV", "Initialization Vector") { |v| options[:iv] = v }
+  opts.on("-k", "--key KEY", "Encryption Key") { |v| options[:key] = v }
+  opts.on("-d", "--data DATA", "Data to encrypt") { |v| options[:data] = v }
+end.parse!
 
-# 暗号化するデータ
-data = "This is a secret message."
+# IV、KEY、データを取得
+iv = options[:iv]
+key = options[:key]
+data = options[:data]
+
+# ゼロでパディングする
+if iv.bytesize != 16
+  iv = iv.ljust(16, "\x00")
+end
+if key.bytesize != 32
+  key = key.ljust(32, "\x00")
+end
 
 # UTF-8からバイナリに変換してBASE64エンコード
 binary_data = data.encode('UTF-8').force_encoding('BINARY')
