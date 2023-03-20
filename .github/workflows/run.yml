@@ -24,8 +24,19 @@ jobs:
           bundle install
       - name: Run
         run: |
+          echo "---------- AES 256 (ECB) ----------"
           ruby ./app/AES-256-ECB.rb --key "key-key" --data "Hello World!!!"
+          echo ""
+          echo "---------- AES 256 (CBC) ----------"
           ruby ./app/AES-256-CBC.rb --iv "initial-vector" --key "key-key" --data "Hello World!!!"
+          echo ""
+          echo "---------- AES 256 (CTR) ----------"
           ruby ./app/AES-256-CTR.rb  --iv "initial-vector" --key "key-key" --data "Hello World!!!"
+          echo ""
+          echo "---------- AES 256 (OFB) ----------"
           ruby ./app/AES-256-OFB.rb  --iv "initial-vector" --key "key-key" --data "Hello World!!!"
+          echo ""
+          echo "---------- AES 256 (CFB) ----------"
           ruby ./app/AES-256-CFB.rb  --iv "initial-vector" --key "key-key" --data "Hello World!!!"
+          echo ""
+          echo "---------- ------------- ----------"
