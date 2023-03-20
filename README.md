@@ -2,6 +2,8 @@
 
 🎭🎭🎭 RubyのAES暗号を使ってみる！  
 
+![成果物](./docs/img/fruit.png)  
+
 ## 実行方法
 
 ```shell
