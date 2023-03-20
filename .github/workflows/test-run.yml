@@ -1,0 +1,31 @@
+name: Run ruby app
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        ruby: [ '3.0.5', '3.1.3', '3.2.1' ]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+      - name: Install dependencies
+        run: |
+          gem install bundler
+          bundle install
+      - name: Run
+        run: |
+          ruby ./app/AES-256-ECB.rb --key "key-key" --data "Hello World!!!"
+          ruby ./app/AES-256-CBC.rb --iv "initial-vector" --key "key-key" --data "Hello World!!!"
+          ruby ./app/AES-256-CTR.rb  --iv "initial-vector" --key "key-key" --data "Hello World!!!"
+          ruby ./app/AES-256-OFB.rb  --iv "initial-vector" --key "key-key" --data "Hello World!!!"
+          ruby ./app/AES-256-CFB.rb  --iv "initial-vector" --key "key-key" --data "Hello World!!!"
